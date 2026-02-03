@@ -27,7 +27,7 @@ class Direccion(models.Model):
     
 class Telefono(models.Model):
     contacto = models.ForeignKey(Contacto, related_name='telefonos', on_delete=models.CASCADE)
-    tipo = models.IntegerField(max_length=50, choices=opciones)
+    tipo = models.IntegerField(choices=opciones)
     alias = models.CharField(max_length=255)
     numero = models.CharField(max_length=50)
     
