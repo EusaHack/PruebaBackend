@@ -72,4 +72,20 @@ class ContactoSerializer(serializers.ModelSerializer):
             for telefono in telefonos_data:
                 Telefono.objects.create(contacto=instance, **telefono)
 
-        return instance                 
+        return instance
+    
+    
+class ContactoListSerializer(serializers.ModelSerializer):
+    telefono = serializers.SerializerMethodField()
+    nombre_completo = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Contacto
+        fields = ["id", "nombre_completo", "telefono"]
+
+    def get_nombre_completo(self, obj):
+        return f"{obj.nombre} {obj.apellidos}".strip()
+
+    def get_telefono(self, obj):
+        tel = obj.telefonos.first()
+        return tel.numero if tel else None                     
