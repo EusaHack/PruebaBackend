@@ -1,5 +1,6 @@
 from django.db import models
 from .utils.estados import estados
+from .utils.opciones import opciones
 
 # Create your models here.
 class Contacto(models.Model):
@@ -22,4 +23,14 @@ class Direccion(models.Model):
     referencias = models.TextField(null=True, blank=True)
     
     def __str__(self):
-        return f"{self.calle}, {self.colonia}, {self.municipio}, {self.estado}"    
+        return f"{self.calle}, {self.colonia}, {self.municipio}, {self.estado}"
+    
+class Telefono(models.Model):
+    contacto = models.ForeignKey(Contacto, related_name='telefonos', on_delete=models.CASCADE)
+    tipo = models.IntegerField(max_length=50, choices=opciones)
+    alias = models.CharField(max_length=255)
+    numero = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return f"{self.tipo} - {self.numero}"    
+        
