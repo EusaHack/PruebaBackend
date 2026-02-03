@@ -165,3 +165,114 @@ python manage.py makemigrations
 python manage.py migrate
 
 ```
+
+Crear endpoints con rest_framework :
+
+```sh
+#Instalar herramienta 
+pip install djangorestframework
+
+#Registrar en apps 
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'apps.agenda',
+    'rest_framework',
+]
+
+#Generar el serializer
+from django.db import transaction
+from rest_framework import serializers
+from .models import Contacto, Direccion, Telefono
+
+class DireccionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Direccion
+        exclude = ['contacto']
+
+class TelefonoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Telefono
+        exclude = ['contacto']
+   
+class ContactoSerializer(serializers.ModelSerializer):
+    direcciones = DireccionSerializer(many=True)
+    telefonos = TelefonoSerializer(many=True)
+
+class ContactoSerializer(serializers.ModelSerializer):
+    direcciones = DireccionSerializer(many=True)
+    telefonos = TelefonoSerializer(many=True)
+    
+    class Meta:
+        model = Contacto
+        fields = [
+            'id',
+            'nombre',
+            'apellidos',
+            'foto',
+            'fecha_nacimiento',
+            'direcciones',
+            'telefonos',
+        ]
+
+    def validate_telefonos(self, value):
+        if not value:
+            raise serializers.ValidationError("Debe tener al menos un teléfono")
+        return value
+    
+    def validate_direcciones(self, value):
+        if not value:
+            raise serializers.ValidationError("Debe tener al menos una dirección")
+        return value
+
+    @transaction.atomic    
+    def create(self, validated_data):
+        direcciones_data = validated_data.pop('direcciones')
+        telefonos_data = validated_data.pop('telefonos')
+
+        contacto = Contacto.objects.create(**validated_data)
+
+        for direccion in direcciones_data:
+            Direccion.objects.create(contacto=contacto, **direccion)
+
+        for telefono in telefonos_data:
+            Telefono.objects.create(contacto=contacto, **telefono)
+
+        return contacto
+
+#Crear Vista en views.py
+
+from rest_framework import viewsets
+from .models import Contacto
+from .serializers import ContactoSerializer
+
+class ContactoViewSet(viewsets.ModelViewSet):
+    queryset = Contacto.objects.all()
+    serializer_class = ContactoSerializer
+
+
+#Crear  url en url.py
+
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ContactoViewSet
+
+router = DefaultRouter()
+router.register(r'contactos', ContactoViewSet, basename='contactos')
+
+urlpatterns = [
+    path('', include(router.urls)),
+]
+
+#Anadir a urls del proyecto
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include('apps.agenda.urls')),
+]
+```
+
