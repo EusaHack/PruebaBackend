@@ -3,7 +3,8 @@
     "_postman_id": "be1ebfc3-d340-4ad7-8466-fdfa6f4df2db",
     "name": "Api django Back",
     "description": "# 🚀 INICIO DE API BACK\n\n#### **1: GET**\n\n<img src=\"https://content.pstmn.io/1322c71e-4c09-481b-93ff-9c572361178f/aW1hZ2UucG5n\" width=\"839\" height=\"807\">\n\n#### **2: POST**\n\n<img src=\"https://content.pstmn.io/3ad20766-fff1-4379-b1aa-414c09f27471/aW1hZ2UucG5n\" width=\"835\" height=\"769\">\n\n#### **3: PUT**\n\n<img src=\"https://content.pstmn.io/1a380861-c7b9-4fcf-8ffc-042ad30564df/aW1hZ2UucG5n\" width=\"838\" height=\"780\">\n\n#### **4: DEL**\n\n<img src=\"https://content.pstmn.io/2a7a33bd-0e9a-4ae1-9759-c08e67e1c229/aW1hZ2UucG5n\" alt=\"\" height=\"635\" width=\"847\">",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "34991613"
   },
   "item": [
     {
@@ -12,32 +13,24 @@
         {
           "listen": "test",
           "script": {
-            "type": "text/javascript",
             "exec": [
               "pm.test(\"Status code is 200\", function () {",
               "    pm.response.to.have.status(200);",
               "});"
-            ]
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
           }
         }
       ],
-      "id": "61b358a6-5b3c-464f-ac81-352376182a9a",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{base_url}}/info?id=1",
+          "raw": "{{base_url}}",
           "host": [
             "{{base_url}}"
-          ],
-          "path": [
-            "info"
-          ],
-          "query": [
-            {
-              "key": "id",
-              "value": "1"
-            }
           ]
         },
         "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -50,23 +43,24 @@
         {
           "listen": "test",
           "script": {
-            "type": "text/javascript",
             "exec": [
               "pm.test(\"Successful POST request\", function () {",
               "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
               "});",
               ""
-            ]
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
           }
         }
       ],
-      "id": "25b60f29-bb68-426a-bd26-e5c15e0a153e",
       "request": {
         "method": "POST",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+          "raw": "{\n  \"nombre\": \"Juan\",\n  \"apellidos\": \"Pérez López\",\n  \"fecha_nacimiento\": \"1992-08-15\",\n  \"direcciones\": [\n    {\n      \"calle\": \"Av. Insurgentes Sur\",\n      \"numero_exterior\": \"1234\",\n      \"numero_interior\": \"5B\",\n      \"colonia\": \"Del Valle\",\n      \"municipio\": \"Benito Juárez\",\n      \"estado\": \"CMX\",\n      \"referencias\": \"Frente al parque\"\n    }\n  ],\n  \"telefonos\": [\n    {\n      \"tipo\": 1,\n      \"alias\": \"Personal\",\n      \"numero\": \"5512345678\"\n    }\n  ]\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -74,12 +68,9 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}/info",
+          "raw": "{{base_url}}",
           "host": [
             "{{base_url}}"
-          ],
-          "path": [
-            "info"
           ]
         },
         "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
@@ -92,23 +83,24 @@
         {
           "listen": "test",
           "script": {
-            "type": "text/javascript",
             "exec": [
               "pm.test(\"Successful PUT request\", function () {",
               "    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
               "});",
               ""
-            ]
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
           }
         }
       ],
-      "id": "4da83342-26a7-4b2c-a824-583ab89c1314",
       "request": {
         "method": "PUT",
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n\t\"name\": \"Add your name in the body\"\n}",
+          "raw": "{\n  \"nombre\": \"Juan Carlos\",\n  \"apellidos\": \"Pérez Ramírez\",\n  \"direcciones\": [\n    {\n      \"calle\": \"Av. Reforma\",\n      \"numero_exterior\": \"250\",\n      \"numero_interior\": \"3A\",\n      \"colonia\": \"Juárez\",\n      \"municipio\": \"Cuauhtémoc\",\n      \"estado\": \"CMX\",\n      \"referencias\": \"Cerca del Ángel\"\n    }\n  ],\n  \"telefonos\": [\n    {\n      \"tipo\": 1,\n      \"alias\": \"Personal\",\n      \"numero\": \"5599998888\"\n    }\n  ]\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -116,18 +108,12 @@
           }
         },
         "url": {
-          "raw": "{{base_url}}/info?id=1",
+          "raw": "{{base_url}}7/",
           "host": [
-            "{{base_url}}"
+            "{{base_url}}7"
           ],
           "path": [
-            "info"
-          ],
-          "query": [
-            {
-              "key": "id",
-              "value": "1"
-            }
+            ""
           ]
         },
         "description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -140,45 +126,121 @@
         {
           "listen": "test",
           "script": {
-            "type": "text/javascript",
             "exec": [
               "pm.test(\"Successful DELETE request\", function () {",
               "    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
               "});",
               ""
-            ]
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
           }
         }
       ],
-      "id": "c51c87b2-916b-4e4d-9108-a7ab0106affd",
       "request": {
         "method": "DELETE",
         "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
         "url": {
-          "raw": "{{base_url}}/info?id=1",
+          "raw": "{{base_url}}12/",
           "host": [
-            "{{base_url}}"
+            "{{base_url}}12"
           ],
           "path": [
-            "info"
-          ],
-          "query": [
-            {
-              "key": "id",
-              "value": "1"
-            }
+            ""
           ]
         },
         "description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+      },
+      "response": []
+    },
+    {
+      "name": "Get data nombre o telefono",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url_list}}4/",
+          "host": [
+            "{{base_url_list}}4"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Paginacion",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url_paginado}}?page=4",
+          "host": [
+            "{{base_url_paginado}}"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "4"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get data id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}4/",
+          "host": [
+            "{{base_url}}4"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get data direcciones",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}4/direcciones/",
+          "host": [
+            "{{base_url}}4"
+          ],
+          "path": [
+            "direcciones",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get data telefonos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}4/telefonos/",
+          "host": [
+            "{{base_url}}4"
+          ],
+          "path": [
+            "telefonos",
+            ""
+          ]
+        }
       },
       "response": []
     }
@@ -187,8 +249,8 @@
     {
       "listen": "prerequest",
       "script": {
-        "id": "87be6c86-4a65-4e04-993b-04a440a791fe",
         "type": "text/javascript",
+        "packages": {},
         "requests": {},
         "exec": [
           ""
@@ -198,8 +260,8 @@
     {
       "listen": "test",
       "script": {
-        "id": "7e9e319b-13ac-422a-b53f-4e2bf69ff37e",
         "type": "text/javascript",
+        "packages": {},
         "requests": {},
         "exec": [
           ""
@@ -209,9 +271,16 @@
   ],
   "variable": [
     {
-      "id": "7912d354-659c-4a44-889f-a5840ada3aa1",
       "key": "base_url",
-      "value": "https://template.postman-echo.com"
+      "value": "http://127.0.0.1:8000/api/contactos/"
+    },
+    {
+      "key": "base_url_list",
+      "value": "http://127.0.0.1:8000/api/contactos-list/"
+    },
+    {
+      "key": "base_url_paginado",
+      "value": "http://127.0.0.1:8000/api/contactos-paginado/"
     }
   ]
 }
