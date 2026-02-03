@@ -51,4 +51,25 @@ class ContactoSerializer(serializers.ModelSerializer):
         for telefono in telefonos_data:
             Telefono.objects.create(contacto=contacto, **telefono)
 
-        return contacto                 
+        return contacto
+    
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        direcciones_data = validated_data.pop('direcciones', None)
+        telefonos_data = validated_data.pop('telefonos', None)
+       
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+       
+        if direcciones_data is not None:
+            instance.direcciones.all().delete()
+            for direccion in direcciones_data:
+                Direccion.objects.create(contacto=instance, **direccion)
+        
+        if telefonos_data is not None:
+            instance.telefonos.all().delete()
+            for telefono in telefonos_data:
+                Telefono.objects.create(contacto=instance, **telefono)
+
+        return instance                 
