@@ -1,42 +1,7 @@
 from django.db import models
+from .utils.estados import estados
 
 # Create your models here.
-
-estados = [
-    ('AGS', 'Aguascalientes'),
-    ('BCN', 'Baja California'),
-    ('BCS', 'Baja California Sur'),
-    ('CAM', 'Campeche'),
-    ('CHP', 'Chiapas'),
-    ('CHH', 'Chihuahua'),
-    ('CMX', 'Ciudad de México'),
-    ('COA', 'Coahuila'),
-    ('COL', 'Colima'),
-    ('DUR', 'Durango'),
-    ('GUA', 'Guanajuato'),
-    ('GRO', 'Guerrero'),
-    ('HID', 'Hidalgo'),
-    ('JAL', 'Jalisco'),
-    ('MEX', 'Estado de México'),
-    ('MIC', 'Michoacán'),
-    ('MOR', 'Morelos'),
-    ('NAY', 'Nayarit'),
-    ('NLE', 'Nuevo León'),
-    ('OAX', 'Oaxaca'),
-    ('PUE', 'Puebla'),
-    ('QUE', 'Querétaro'),
-    ('ROO', 'Quintana Roo'),
-    ('SLP', 'San Luis Potosí'),
-    ('SIN', 'Sinaloa'),
-    ('SON', 'Sonora'),
-    ('TAB', 'Tabasco'),
-    ('TAM', 'Tamaulipas'),
-    ('TLA', 'Tlaxcala'),
-    ('VER', 'Veracruz'),
-    ('YUC', 'Yucatán'),
-    ('ZAC', 'Zacatecas'),
-]
-
 class Contacto(models.Model):
     nombre = models.CharField(max_length=60)
     apellidos = models.CharField(max_length=100)
