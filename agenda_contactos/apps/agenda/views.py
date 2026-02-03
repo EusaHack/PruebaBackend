@@ -3,13 +3,27 @@ from rest_framework import viewsets
 from rest_framework.filters import SearchFilter
 from django.db.models import Prefetch
 from .models import Contacto,Telefono
-from .serializers import ContactoSerializer,ContactoListSerializer
+from .serializers import ContactoSerializer,ContactoListSerializer,DireccionSerializer, TelefonoSerializer
 from .pagination import ContactoPagination
+from rest_framework.decorators import action
+from rest_framework.response import Response
 # Create your views here.
 
 class ContactoViewSet(viewsets.ModelViewSet):
     queryset = Contacto.objects.all()
     serializer_class = ContactoSerializer
+    
+    @action(detail=True, methods=["get"], url_path="direcciones")
+    def direcciones(self, request, pk=None):
+        contacto = self.get_object()
+        serializer = DireccionSerializer(contacto.direcciones.all(), many=True)
+        return Response(serializer.data)
+    
+    @action(detail=True, methods=["get"], url_path="telefonos")
+    def telefonos(self, request, pk=None):
+        contacto = self.get_object()
+        serializer = TelefonoSerializer(contacto.telefonos.all(), many=True)
+        return Response(serializer.data)
 
 class ContactoListadoPaginadoViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Contacto.objects.all().order_by("id")
